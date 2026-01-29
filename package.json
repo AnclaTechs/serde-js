@@ -1,0 +1,25 @@
+{
+  "name": "@anclatechs/serde-js",
+  "version": "1.0.1",
+  "description": "Composable, schema-driven serialization and validation for JavaScript.",
+  "main": "src/index.js",
+  "types": "src/dist.d.ts",
+  "exports": {
+    ".": "./src/dist.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnclaTechs/serde-js.git"
+  },
+  "keywords": [
+    "serializer",
+    "deserializer",
+    "json",
+    "nodeJs"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ancla Technologies (AnclaTechs)",
+  "license": "MIT"
+}
