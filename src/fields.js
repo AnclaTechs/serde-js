@@ -24,14 +24,14 @@ class Field {
     return true;
   }
 
-  serialize(value, ctx = {}, parentSerializer, path, mode = "both") {
-    if (mode === "input" && this.readOnly) return { skip: true };
-    if (mode === "output" && this.writeOnly) return { skip: true };
+  serialize(value, ctx = {}, parentSerializer, path, mode) {
+    if (mode === "input" && this._readOnly) return { skip: true };
+    if (mode === "output" && this._writeOnly) return { skip: true };
 
     // context-aware exclusion
     if (this.contextRule && !this.contextRule(ctx)) return { skip: true };
 
-    if (value === undefined) {
+    if (!value) {
       if (this.defaultValue !== undefined) return { value: this.defaultValue };
       if (this.required && mode !== "output")
         parentSerializer?._addError(path, "Field is required");
@@ -47,6 +47,7 @@ class Field {
     // validators
     for (const validator of this.validators) {
       const result = validator(value, ctx);
+      console.log({ result, parentSerializer });
       if (result !== true)
         parentSerializer?._addError(path, result || "Validation failed");
     }

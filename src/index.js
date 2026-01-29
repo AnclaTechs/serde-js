@@ -3,7 +3,10 @@ const { ArrayField, ObjectField } = require("./fields");
 class Serializer {
   constructor(schema, options = {}) {
     this.schema = schema;
-    this.many = !!options.many;
+    this.many = false;
+    this.context = {};
+    this.mode = "";
+    this.allowedModes = ["both", "input", "output"];
     this.errors = {};
 
     for (const [name, field] of Object.entries(schema)) {
@@ -11,21 +14,53 @@ class Serializer {
     }
   }
 
-  serialize(input, context = {}, mode = "both") {
+  serialize(input, options) {
+    // option.MANY
+    this.many = options.many ?? false;
+    if (typeof this.many !== "boolean") {
+      throw new TypeError(
+        `Expected 'many' to be a boolean, got ${typeof this.many}`,
+      );
+    }
+
+    // option.MODES
+    this.mode = options.mode || "both";
+    if (
+      typeof this.mode !== "string" ||
+      !this.allowedModes.includes(this.mode)
+    ) {
+      throw new TypeError(
+        `Invalid mode: "${this.mode}". Allowed modes are: ${this.allowedModes.join(", ")}`,
+      );
+    }
+
+    // option.CONTEXT
+    this.context = options.context ?? options.ctx ?? {};
+    if (
+      typeof this.context !== "object" ||
+      this.context === null ||
+      Array.isArray(this.context)
+    ) {
+      throw new TypeError(
+        `Expected 'context' to be a plain object, got ${this.context === null ? "null" : typeof this.context}`,
+      );
+    }
+
     this.errors = {};
+
     if (this.many) {
       if (!Array.isArray(input))
         throw new Error("Expected array when many=true");
       this.data = input.map((item, index) =>
-        this._serializeItem(item, context, index, mode),
+        this._serializeItem(item, this.context, index, this.mode),
       );
     } else {
-      this.data = this._serializeItem(input, context, null, mode);
+      this.data = this._serializeItem(input, this.context, null, this.mode);
     }
     return this;
   }
 
-  _serializeItem(item, context = {}, index = null, mode = "both") {
+  _serializeItem(item, context = {}, index = null, mode) {
     const output = {};
 
     for (const key in this.schema) {
