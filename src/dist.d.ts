@@ -37,9 +37,20 @@ export declare class Field {
   ): SerializeResult
 }
 
-export declare class CharField extends Field {}
-export declare class NumberField extends Field {}
-export declare class IntegerField extends Field {}
+export declare class CharField extends Field {
+  enumOptions(values: string[]): this
+  minLength(length: number): this
+  maxLength(length: number): this
+}
+
+export declare class NumberField extends Field {
+  min(value: number): this
+  max(value: number): this
+}
+export declare class IntegerField extends Field {
+  min(value: number): this
+  max(value: number): this
+}
 export declare class BooleanField extends Field {}
 export declare class DateTimeField extends Field {}
 export declare class DateField extends Field {}

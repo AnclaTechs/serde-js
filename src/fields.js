@@ -89,11 +89,50 @@ class CharField extends Field {
   checkType(value) {
     return typeof value === "string";
   }
+
+  enumOptions(values) {
+    this.validate(
+      (v) => values.includes(v) || `Must be one of: ${values.join(", ")}`,
+    );
+    return this;
+  }
+
+  minLength(length) {
+    this.validate((v) =>
+      typeof v === "string" && v.length >= length
+        ? true
+        : `Minimum length is ${length}`,
+    );
+    return this;
+  }
+
+  maxLength(length) {
+    this.validate((v) =>
+      typeof v === "string" && v.length <= length
+        ? true
+        : `Maximum length is ${length}`,
+    );
+    return this;
+  }
 }
 
 class NumberField extends Field {
   checkType(value) {
     return typeof value === "number";
+  }
+
+  min(value) {
+    this.validate((v) =>
+      typeof v === "number" && v >= value ? true : `Must be ≥ ${value}`,
+    );
+    return this;
+  }
+
+  max(value) {
+    this.validate((v) =>
+      typeof v === "number" && v <= value ? true : `Must be ≤ ${value}`,
+    );
+    return this;
   }
 }
 
