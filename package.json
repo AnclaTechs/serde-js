@@ -24,7 +24,9 @@
     "json",
     "serializer",
     "transformer",
-    "data-validation"
+    "data-validation",
+    "joi",
+    "express"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
