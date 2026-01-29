@@ -12,10 +12,19 @@
     "url": "git+https://github.com/AnclaTechs/serde-js.git"
   },
   "keywords": [
-    "serializer",
-    "deserializer",
+    "nodejs",
+    "serde",
+    "serialization",
+    "validation",
+    "context-aware",
+    "declarative",
+    "drf",
+    "schema",
+    "api",
     "json",
-    "nodeJs"
+    "serializer",
+    "transformer",
+    "data-validation"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
