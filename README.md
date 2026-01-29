@@ -137,6 +137,16 @@ new Field()
   .writeOnly();
 ```
 
+`CharField`, in addition to the validate function, also provide helper methods:
+
+```js
+.enumOptions([])
+.minLength(num)
+.maxLength(num)
+```
+
+`NumberField` and `IntegerField` also both support the `.min()` and `.max()` helper methods.
+
 ---
 
 ### Available Field Types
