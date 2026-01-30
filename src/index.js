@@ -57,7 +57,18 @@ class Serializer {
     } else {
       this.data = this._serializeItem(input, this.context, null, this.mode);
     }
-    return this;
+    return {
+      ...this,
+      data: this.data,
+      errors: this.errors,
+      isValid: () => Object.keys(this.errors).length === 0,
+      verboseErrorList: () =>
+        Object.entries(this.errors).map(([path, message]) => ({
+          path,
+          message: `The value for ${path}: ${message}`,
+        })),
+    };
+
   }
 
   _serializeItem(item, context = {}, index = null, mode) {

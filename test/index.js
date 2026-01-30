@@ -19,7 +19,7 @@ const UserSerializer = new Serializer({
   tags: new ArrayField(new CharField()),
 });
 
-const { data, errors } = UserSerializer.serialize(
+const { data, errors, isValid, verboseErrorList } = UserSerializer.serialize(
   {
     name: "",
     age: 10,
@@ -29,4 +29,4 @@ const { data, errors } = UserSerializer.serialize(
   { mode: "output", context: { isAdmin: true } },
 );
 
-console.log({ data, errors });
+console.log({ data, errors, valid: isValid(), errorList: verboseErrorList() });

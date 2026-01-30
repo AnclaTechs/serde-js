@@ -65,18 +65,26 @@ export declare class ObjectField extends Field {
   constructor(serializer: Serializer)
 }
 
-export interface SerializerOptions {
-  many?: boolean
+export interface SerializeOptions {
+  mode?: Mode;
+  context?: any;
+  many?: boolean;
+}
+
+export interface SerializedOutput {
+  data: any;
+  errors: Record<string, string>;
+  isValid(): boolean;
+  firstError(): string | null;
+  verboseErrorList(): { path: string; message: string }[];
 }
 
 export declare class Serializer {
   schema: Record<string, Field>
-  many: boolean
-  errors: Record<string, string>
 
-  constructor(schema: Record<string, Field>, options?: SerializerOptions)
+  constructor(schema: Record<string, Field>, options?: SerializerOptions);
 
-  serialize(input: any, context?: any, mode?: Mode): this
+  serialize(input: any, options?: { mode?: Mode; many?: boolean, context?: any }):  SerializedOutput;
   //_serializeItem(item: any, context?: any, index?: number | null, mode?: Mode): any
   //_addError(path: string, message: string, index?: number | null): void
   describe(): Record<string, any>

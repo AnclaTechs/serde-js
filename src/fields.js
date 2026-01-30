@@ -47,7 +47,6 @@ class Field {
     // validators
     for (const validator of this.validators) {
       const result = validator(value, ctx);
-      console.log({ result, parentSerializer });
       if (result !== true)
         parentSerializer?._addError(path, result || "Validation failed");
     }

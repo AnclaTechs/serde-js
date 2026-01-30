@@ -114,7 +114,10 @@ const result = UserSerializer.serialize({
   email: "ada@example.com",
 });
 
-console.log(result.data);
+console.log(result.data); // serialized output
+console.log(result.errors); // error mapping
+console.log(result.isValid()) // boolean status for any available error
+console.log(result.verboseErrorList()) // simplified, "verbosed" errors data retunred as an Array of object; accessible via .message.
 ```
 
 ---
