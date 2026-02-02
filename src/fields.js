@@ -24,7 +24,7 @@ class Field {
     return true;
   }
 
-  serialize(value, ctx = {}, parentSerializer, path, mode) {
+  serialize(value, ctx = {}, parentSerializer, path, mode, root) {
     if (mode === "input" && this._readOnly) return { skip: true };
     if (mode === "output" && this._writeOnly) return { skip: true };
 
@@ -32,7 +32,14 @@ class Field {
     if (this.contextRule && !this.contextRule(ctx)) return { skip: true };
 
     if (!value) {
-      if (this.defaultValue !== undefined) return { value: this.defaultValue };
+      if (this.defaultValue !== undefined) {
+        if (typeof this.defaultValue === "function") {
+          return {
+            value: this.defaultValue(value, root, ctx),
+          };
+        }
+        return { value: this.defaultValue };
+      }
       if (this.required && mode !== "output")
         parentSerializer?._addError(path, "Field is required");
       return { skip: true };

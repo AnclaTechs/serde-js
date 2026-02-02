@@ -13,16 +13,20 @@ export interface SerializeResult {
 
 export type Mode = "input" | "output" | "both"
 
+export interface DefaultFn<T = any> {
+  (value: T | undefined, root: Record<string, any>, context?: any): T;
+}
+
 export declare class Field {
   required: boolean
-  defaultValue?: any
+  defaultValue?: any | DefaultFn
   validators: ValidatorFn[]
   contextRule?: ContextRuleFn
   writeOnly?: boolean
   readOnly?: boolean
 
   optional(): this
-  default(value: any): this
+  default(value: any | DefaultFn): this
   validate(fn: ValidatorFn): this
   onlyIf(fn: ContextRuleFn): this
   checkType(value: any): boolean

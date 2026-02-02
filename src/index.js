@@ -79,7 +79,7 @@ class Serializer {
       const value = item?.[key];
       const path = index !== null ? `${index}.${key}` : key;
 
-      const result = field.serialize(value, context, this, path, mode);
+      const result = field.serialize(value, context, this, path, mode, output);
       if (!result.skip && result.value !== undefined) {
         output[key] = result.value;
       }

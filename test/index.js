@@ -15,6 +15,9 @@ const AddressSerializer = new Serializer({
 const UserSerializer = new Serializer({
   name: new CharField(),
   age: new IntegerField().min(18),
+  ageInTwoYears: new IntegerField()
+    .default((_, root) => root.age * 2)
+    .readOnly(),
   address: new ObjectField(AddressSerializer),
   tags: new ArrayField(new CharField()),
 });
