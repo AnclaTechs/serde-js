@@ -243,6 +243,43 @@ If the condition fails, the field is:
 - not serialized
 
 ---
+## Default Values
+
+The `Field.default()` method allows you to provide a value when the input does not specify one.
+
+It can be either:
+
+### 1. A constant value
+
+```js
+const UserSerializer = new Serializer({
+  name: new CharField().default("Ada"),
+});
+```
+
+### 2. A function for dynamic computation
+
+You can compute the default value based on other fields in the serializer or context:
+
+```js
+const UserSerializer = new Serializer({
+  name: new CharField(),
+  age: new IntegerField(),
+  ageInTwoYears: new IntegerField().default((_, root, ctx) => root.age * 2).readOnly(),
+});
+```
+
+#### Parameters of the default function
+
+| Parameter | Description                                                                                                            |
+| --------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `value`   | The input value for this field. If the input is missing, it will be `undefined`. May be ignored and represented as `_`. |
+| `root`    | The partially built serialized object. Lets you reference other fields in the same serializer.                         |
+| `ctx`     | Optional context object passed to `serialize(input, context)`. Useful for user info, request metadata, etc.            |
+
+⚠️ Order matters: The field you reference in root (e.g., age) must appear before the dependent field (ageInTwoYears) in the schema.
+
+---
 
 ## Validation
 
