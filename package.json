@@ -1,6 +1,6 @@
 {
   "name": "@anclatechs/serde-js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Composable, schema-driven serialization and validation for JavaScript.",
   "main": "src/index.js",
   "types": "src/dist.d.ts",
