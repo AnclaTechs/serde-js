@@ -1,4 +1,4 @@
-const { ArrayField, ObjectField } = require("./fields");
+const { ArrayField, ObjectField, JsonField } = require("./fields");
 
 class Serializer {
   constructor(schema, options = {}) {
@@ -68,7 +68,6 @@ class Serializer {
           message: `The value for ${path}: ${message}`,
         })),
     };
-
   }
 
   _serializeItem(item, context = {}, index = null, mode) {
@@ -105,7 +104,11 @@ class Serializer {
               : field.child.constructor.name
             : null,
         serializer:
-          field instanceof ObjectField ? field.serializer.describe() : null,
+          field instanceof ObjectField
+            ? field.serializer.describe()
+            : field instanceof JsonField
+              ? "JSON (object or array)"
+              : null,
       };
     }
     return out;

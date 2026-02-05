@@ -69,6 +69,10 @@ export declare class ObjectField extends Field {
   constructor(serializer: Serializer)
 }
 
+export declare class JsonField extends Field {
+  constructor();
+}
+
 export interface SerializeOptions {
   mode?: Mode;
   context?: any;

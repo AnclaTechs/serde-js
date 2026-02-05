@@ -52,6 +52,7 @@ const {
   UrlField,
   ArrayField,
   ObjectField,
+  JsonField,
 } = require("@anclatechs/serde-js");
 ```
 
@@ -165,7 +166,8 @@ new Field()
 | `EmailField`    | Email string   |
 | `UrlField`      | URL string     |
 | `ArrayField`    | Arrays         |
-| `ObjectField`   | Nested objects |
+| `ObjectField`   | Nested structured objects |
+| `JsonField`   | dynamic JSON object |
 
 ---
 

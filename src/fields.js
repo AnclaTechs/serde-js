@@ -178,8 +178,15 @@ class ObjectField extends Field {
     return typeof value === "object" && value !== null && !Array.isArray(value);
   }
 
-  serialize(value, ctx, parentSerializer, path) {
-    const base = super.serialize(value, ctx, parentSerializer, path);
+  serialize(value, ctx, parentSerializer, path, mode, root) {
+    const base = super.serialize(
+      value,
+      ctx,
+      parentSerializer,
+      path,
+      mode,
+      root,
+    );
     if (base.skip) return base;
 
     const nested = this.serializer.serialize(value, ctx);
@@ -189,6 +196,30 @@ class ObjectField extends Field {
     }
 
     return { value: nested.data };
+  }
+}
+
+class JsonField extends Field {
+  constructor() {
+    super();
+  }
+
+  checkType(value) {
+    return typeof value === "object" && value !== null;
+  }
+
+  serialize(value, ctx, parentSerializer, path, mode = "both", root) {
+    const base = super.serialize(
+      value,
+      ctx,
+      parentSerializer,
+      path,
+      mode,
+      root,
+    );
+    if (base.skip) return base;
+
+    return { value: base.value };
   }
 }
 
@@ -217,8 +248,15 @@ class ArrayField extends Field {
     return Array.isArray(value);
   }
 
-  serialize(value, ctx, parentSerializer, path) {
-    const base = super.serialize(value, ctx, parentSerializer, path);
+  serialize(value, ctx, parentSerializer, path, mode, root) {
+    const base = super.serialize(
+      value,
+      ctx,
+      parentSerializer,
+      path,
+      mode,
+      root,
+    );
     if (base.skip) return base;
 
     if (!Array.isArray(value)) {
@@ -271,4 +309,5 @@ module.exports = {
   UrlField,
   ArrayField,
   ObjectField,
+  JsonField,
 };

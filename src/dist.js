@@ -10,6 +10,7 @@ const {
   UrlField,
   ArrayField,
   ObjectField,
+  JsonField,
 } = require("./fields");
 
 module.exports = {
@@ -24,4 +25,5 @@ module.exports = {
   UrlField,
   ArrayField,
   ObjectField,
+  JsonField,
 };
